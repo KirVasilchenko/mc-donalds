@@ -7,6 +7,6 @@ package ru.rosbank.javaschool.model;
 @Data
 @AllArgsConstructor
 @NoArgsConstructor
-public abstract class PotatoModel extends ProductModel {
+public class PotatoModel extends ProductModel {
         private int weightInG;
 }
