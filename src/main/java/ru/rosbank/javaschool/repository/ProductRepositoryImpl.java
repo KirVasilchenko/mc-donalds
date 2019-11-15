@@ -37,7 +37,7 @@ public class ProductRepositoryImpl implements ProductRepository {
     @Override
     public ProductModel update(ProductModel item) {
         ProductModel copy = ProductModel.from(item);
-        // Если есть желание выкинуть Exception
+
         items.stream()
                 .filter(o -> o.getId() == copy.getId())
                 .findAny()

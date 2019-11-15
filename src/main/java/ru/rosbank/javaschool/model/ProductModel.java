@@ -4,7 +4,7 @@ import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 import ru.rosbank.javaschool.dto.ProductDetailsDto;
-import ru.rosbank.javaschool.repository.ProductRepository;
+
 
 @Data
 @AllArgsConstructor

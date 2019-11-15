@@ -6,8 +6,10 @@ package ru.rosbank.javaschool.model;
         import lombok.NoArgsConstructor;
 
 
-//@Data
-//@AllArgsConstructor
-//@NoArgsConstructor
+@Data
+@AllArgsConstructor
+@NoArgsConstructor
 public class BurgerModel extends ProductModel {
+    private String cutletMeat;
+    private int cutletCount;
 }
