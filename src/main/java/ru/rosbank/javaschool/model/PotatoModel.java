@@ -4,9 +4,9 @@ package ru.rosbank.javaschool.model;
         import lombok.Data;
         import lombok.NoArgsConstructor;
 
-@Data
-@AllArgsConstructor
-@NoArgsConstructor
+//@Data
+//@AllArgsConstructor
+//@NoArgsConstructor
 public class PotatoModel extends ProductModel {
         private int weightInG;
 }
