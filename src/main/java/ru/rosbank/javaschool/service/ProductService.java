@@ -6,7 +6,7 @@ import ru.rosbank.javaschool.dto.ProductDto;
 import java.util.List;
 
 public interface ProductService {
-    List<ProductDto> getAll();
+    List<? extends ProductDto> getAll();
 
     ProductDetailsDto getById(int id);
 

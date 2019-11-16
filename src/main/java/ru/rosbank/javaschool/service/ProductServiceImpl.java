@@ -14,7 +14,7 @@ public class ProductServiceImpl implements ProductService {
     private final ProductRepository repository;
 
     @Override
-    public List<ProductDto> getAll() {
+    public List<? extends ProductDto> getAll() {
         return repository.getAll().stream()
                 .map(ProductDto::from)
                 .collect(Collectors.toList())
