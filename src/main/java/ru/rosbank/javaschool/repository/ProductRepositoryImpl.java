@@ -9,7 +9,7 @@ import java.util.stream.Collectors;
 import java.util.stream.Stream;
 
 public class ProductRepositoryImpl implements ProductRepository {
-    private Collection<ProductModel> items = Collections.emptyList();
+    private Collection<? extends ProductModel> items = Collections.emptyList();
     private int nextId = 1;
 
     @Override
@@ -18,7 +18,7 @@ public class ProductRepositoryImpl implements ProductRepository {
     }
 
     @Override
-    public Optional<ProductModel> getById(int id) {
+    public Optional<? extends ProductModel> getById(int id) {
         return items.stream()
                 .filter(o -> o.getId() == id)
                 .findFirst()
@@ -53,7 +53,7 @@ public class ProductRepositoryImpl implements ProductRepository {
 
     @Override
     public boolean removeById(int id) {
-        Collection<ProductModel> original = items;
+        Collection<? extends ProductModel> original = items;
         Collection<ProductModel> copy = items.stream()
                 .filter(o -> o.getId() != id)
                 .collect(Collectors.toList());
