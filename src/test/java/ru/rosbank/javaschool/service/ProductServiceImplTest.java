@@ -425,6 +425,31 @@ class ProductServiceImplTest {
     }
 
     @Test
+    void saveOrderFailsToUpdateNonExistingOrder() {
+        final ProductServiceImpl service = new ProductServiceImpl(new ProductRepositoryImpl(), new OrderRepositoryImpl());
+        service.saveProduct(new BurgerDetailsDto(
+                0,
+                "Cheeseburger",
+                52,
+                "Juicy meat",
+                "Beef",
+                1
+        ));
+
+        Order order = new Order(0, new LinkedList<OrderPosition>());
+        OrderPosition position = new OrderPosition(service.getProductById(1), 1);
+        order.add(position);
+        service.saveOrder(order);
+
+        final Order order2 = new Order(2, new LinkedList<OrderPosition>());
+        position = new OrderPosition(service.getProductById(1), 1);
+        order.add(position);
+        service.saveOrder(order);
+
+        assertThrows(DataSaveException.class, () -> service.saveOrder(order2));
+    }
+
+    @Test
     void getProductBySearchSearchesCorrect() {
         final ProductServiceImpl service = new ProductServiceImpl(new ProductRepositoryImpl(), new OrderRepositoryImpl());
         service.saveProduct(new BurgerDetailsDto(

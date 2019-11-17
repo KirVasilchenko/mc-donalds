@@ -15,13 +15,11 @@ public class OrderRepositoryImpl implements OrderRepository {
 
 
     @Override
-    //TODO: cover!
     public Collection<Order> getAll() {
         return Collections.unmodifiableCollection(items);
     }
 
     @Override
-    //TODO: cover!
     public Optional<Order> getById(int id) {
         return items.stream()
                 .filter(o -> o.getId() == id)
@@ -49,7 +47,6 @@ public class OrderRepositoryImpl implements OrderRepository {
     }
 
     @Override
-    //TODO: cover!
     public boolean removeById(int id) {
         Collection<Order> original = items;
         Collection<Order> copy = items.stream()
