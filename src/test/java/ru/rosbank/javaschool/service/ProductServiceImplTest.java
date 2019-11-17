@@ -183,7 +183,7 @@ class ProductServiceImplTest {
         order.add(position);
         service.saveOrder(order);
 
-        boolean result = service.removeProductById(1);
+        boolean result = service.removeOrderById(1);
         assertTrue(result);
     }
 

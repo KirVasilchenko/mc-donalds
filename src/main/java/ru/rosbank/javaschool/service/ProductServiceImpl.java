@@ -66,7 +66,6 @@ public class ProductServiceImpl implements ProductService {
     }
 
     @Override
-    //TODO: cover!
     public Collection<Order> getAllOrders() {
         return new ArrayList<>(orders.getAll())
                 ;
@@ -80,7 +79,6 @@ public class ProductServiceImpl implements ProductService {
     }
 
     @Override
-    //TODO: cover!
     public Order saveOrder(Order item) {
         if (item.getId() < 0) {
             throw new InvalidDataException("Id can't be negative");
