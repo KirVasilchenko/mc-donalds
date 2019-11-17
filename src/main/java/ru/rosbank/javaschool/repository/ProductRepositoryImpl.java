@@ -1,5 +1,6 @@
 package ru.rosbank.javaschool.repository;
 
+import ru.rosbank.javaschool.exception.DataSaveException;
 import ru.rosbank.javaschool.model.ProductModel;
 
 import java.util.Collection;
@@ -42,7 +43,7 @@ public class ProductRepositoryImpl implements ProductRepository {
                 return item;
             }
         }
-        throw new RuntimeException();
+        throw new DataSaveException("Item id = " + item.getId() + " was not found.");
     }
 
     @Override

@@ -1,8 +1,6 @@
 package ru.rosbank.javaschool;
 
 import ru.rosbank.javaschool.dto.BurgerDetailsDto;
-import ru.rosbank.javaschool.dto.ProductDetailsDto;
-import ru.rosbank.javaschool.model.ProductModel;
 import ru.rosbank.javaschool.repository.ProductRepositoryImpl;
 import ru.rosbank.javaschool.service.ProductServiceImpl;
 
