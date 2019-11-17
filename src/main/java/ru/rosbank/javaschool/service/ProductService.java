@@ -23,4 +23,8 @@ public interface ProductService {
     boolean removeProductById(int id);
 
     boolean removeOrderById(int id);
+
+    Collection<ProductDto> getProductBySearch(String query);
+
+    Collection<ProductDto> getCategoryListing(String category);
 }

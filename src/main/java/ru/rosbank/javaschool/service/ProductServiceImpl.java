@@ -99,4 +99,23 @@ public class ProductServiceImpl implements ProductService {
         }
         return true;
     }
+
+    @Override
+    public Collection<ProductDto> getProductBySearch(String query) {
+        return products.getAll().stream()
+                .filter(o -> o.getName().toLowerCase().contains(query.toLowerCase()))
+                .map(ProductDto::from)
+                .collect(Collectors.toList())
+                ;
+    }
+
+    @Override
+    public Collection<ProductDto> getCategoryListing(String category) {
+        return products.getAll().stream()
+                .filter(o -> o.getClass().getSimpleName().toLowerCase().contains(category.toLowerCase()))
+                .map(ProductDto::from)
+                .collect(Collectors.toList())
+                ;
+    }
+
 }
