@@ -35,7 +35,6 @@ public class OrderRepositoryImpl implements OrderRepository {
     }
 
     @Override
-    //TODO: cover!
     public Order update(Order item) {
         for (Order keep : items) {
             if (keep.getId() == item.getId()) {

@@ -101,7 +101,6 @@ public class ProductServiceImpl implements ProductService {
     }
 
     @Override
-    //TODO: cover!
     public Collection<ProductDto> getProductBySearch(String query) {
         return products.getAll().stream()
                 .filter(o -> o.getName().toLowerCase().contains(query.toLowerCase()))
@@ -111,7 +110,6 @@ public class ProductServiceImpl implements ProductService {
     }
 
     @Override
-    //TODO: cover!
     public Collection<ProductDto> getCategoryListing(String category) {
         return products.getAll().stream()
                 .filter(o -> o.getClass().getSimpleName().toLowerCase().contains(category.toLowerCase()))
