@@ -423,4 +423,34 @@ class ProductServiceImplTest {
 
         assertThrows(InvalidDataException.class, () -> service.saveOrder(order));
     }
+
+    @Test
+    void getProductBySearchSearchesCorrect() {
+        final ProductServiceImpl service = new ProductServiceImpl(new ProductRepositoryImpl(), new OrderRepositoryImpl());
+        service.saveProduct(new BurgerDetailsDto(
+                0,
+                "Cheeseburger",
+                52,
+                "Juicy meat",
+                "Beef",
+                1
+        ));
+
+        assertNotNull(service.getProductBySearch("Cheeseburger"));
+    }
+
+    @Test
+    void getCategoryListingShowsCorrect() {
+        final ProductServiceImpl service = new ProductServiceImpl(new ProductRepositoryImpl(), new OrderRepositoryImpl());
+        service.saveProduct(new BurgerDetailsDto(
+                0,
+                "Cheeseburger",
+                52,
+                "Juicy meat",
+                "Beef",
+                1
+        ));
+
+        assertNotNull(service.getCategoryListing("Burger"));
+    }
 }
