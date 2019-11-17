@@ -1,8 +1,10 @@
 package ru.rosbank.javaschool.service;
 
 import lombok.RequiredArgsConstructor;
+import ru.rosbank.javaschool.dto.BurgerDetailsDto;
 import ru.rosbank.javaschool.dto.ProductDetailsDto;
 import ru.rosbank.javaschool.dto.ProductDto;
+import ru.rosbank.javaschool.model.BurgerModel;
 import ru.rosbank.javaschool.model.ProductModel;
 import ru.rosbank.javaschool.repository.ProductRepository;
 
@@ -29,8 +31,9 @@ public class ProductServiceImpl implements ProductService {
                 ;
     }
 
+    //TODO: test save of burger, then extend features
     @Override
-    public void save(ProductDetailsDto dto) {
+    public <T extends ProductDetailsDto> void save(T dto) {
         if (dto.getId() < 0) {
             throw new RuntimeException("Id can't be negative");
         }
@@ -40,11 +43,17 @@ public class ProductServiceImpl implements ProductService {
         }
 
         if (dto.getId() == 0) {
-            repository.create(ProductModel.from(dto));
+            if (dto instanceof BurgerDetailsDto) {
+                repository.create(BurgerModel.from(dto));
+            }
+//                repository.create(ProductModel.from(dto));
             return;
         }
 
-        repository.update(ProductModel.from(dto));
+        if (dto instanceof BurgerDetailsDto) {
+            repository.update(BurgerModel.from(dto));
+        }
+//        repository.update(ProductModel.from(dto));
     }
 
     @Override
