@@ -26,4 +26,5 @@ public class PotatoDetailsDto extends ProductDetailsDto {
                 this.getWeightInG()
         );
     }
+
 }

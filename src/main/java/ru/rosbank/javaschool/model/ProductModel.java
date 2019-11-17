@@ -5,7 +5,6 @@ import lombok.Data;
 import lombok.NoArgsConstructor;
 import ru.rosbank.javaschool.dto.ProductDetailsDto;
 
-
 @Data
 @AllArgsConstructor
 @NoArgsConstructor

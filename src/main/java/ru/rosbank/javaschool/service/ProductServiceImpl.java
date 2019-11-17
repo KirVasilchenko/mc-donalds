@@ -3,9 +3,10 @@ package ru.rosbank.javaschool.service;
 import lombok.RequiredArgsConstructor;
 import ru.rosbank.javaschool.dto.ProductDetailsDto;
 import ru.rosbank.javaschool.dto.ProductDto;
+import ru.rosbank.javaschool.model.ProductModel;
 import ru.rosbank.javaschool.repository.ProductRepository;
 
-import java.util.List;
+import java.util.Collection;
 import java.util.stream.Collectors;
 
 @RequiredArgsConstructor
@@ -13,7 +14,7 @@ public class ProductServiceImpl implements ProductService {
     private final ProductRepository repository;
 
     @Override
-    public List<? extends ProductDto> getAll() {
+    public Collection<ProductDto> getAll() {
         return repository.getAll().stream()
                 .map(ProductDto::from)
                 .collect(Collectors.toList())
@@ -23,15 +24,19 @@ public class ProductServiceImpl implements ProductService {
     @Override
     public ProductDetailsDto getById(int id) {
         return repository.getById(id)
-                .map(ProductDetailsDto::from)
+                .map(ProductModel::toDto)
                 .orElseThrow(RuntimeException::new)
                 ;
     }
 
     @Override
-    public <T extends ProductDetailsDto> void save(T dto) {
+    public ProductModel save(ProductDetailsDto dto) {
         if (dto.getId() < 0) {
             throw new RuntimeException("Id can't be negative");
+        }
+
+        if (dto.getName() == null) {
+            throw new RuntimeException("Name can't be empty");
         }
 
         if (dto.getPrice() < 0) {
@@ -39,18 +44,18 @@ public class ProductServiceImpl implements ProductService {
         }
 
         if (dto.getId() == 0) {
-            repository.create(ProductModel.from(dto));
-            return;
+            return repository.create(dto.fromDto());
         }
 
-        repository.update(ProductModel.from(dto));
+        return repository.update(dto.fromDto());
     }
 
     @Override
-    public void removeById(int id) {
+    public boolean removeById(int id) {
         boolean removed = repository.removeById(id);
         if (!removed) {
             throw new RuntimeException();
         }
+        return true;
     }
 }

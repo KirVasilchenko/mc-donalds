@@ -29,4 +29,5 @@ public class BurgerDetailsDto extends ProductDetailsDto {
                 this.getCutletCount()
         );
     }
+
 }

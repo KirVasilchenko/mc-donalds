@@ -26,4 +26,5 @@ public class DrinkDetailsDto extends ProductDetailsDto {
                 this.getVolumeInMl()
         );
     }
+
 }

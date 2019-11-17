@@ -8,7 +8,7 @@ import java.util.Optional;
 public interface ProductRepository {
     Collection<? extends ProductModel> getAll();
 
-    Optional<? extends ProductModel> getById(int id);
+    Optional<ProductModel> getById(int id);
 
     ProductModel create(ProductModel item);
 

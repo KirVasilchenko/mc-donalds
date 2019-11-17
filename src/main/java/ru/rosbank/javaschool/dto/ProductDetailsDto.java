@@ -16,4 +16,5 @@ public abstract class ProductDetailsDto {
     private String description;
 
     public abstract ProductModel fromDto();
+
 }

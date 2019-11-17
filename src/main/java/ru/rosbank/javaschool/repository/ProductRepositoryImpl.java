@@ -4,12 +4,12 @@ import ru.rosbank.javaschool.model.ProductModel;
 
 import java.util.Collection;
 import java.util.Collections;
+import java.util.LinkedList;
 import java.util.Optional;
 import java.util.stream.Collectors;
-import java.util.stream.Stream;
 
 public class ProductRepositoryImpl implements ProductRepository {
-    private Collection<? extends ProductModel> items = Collections.emptyList();
+    private Collection<ProductModel> items = new LinkedList<>();
     private int nextId = 1;
 
     @Override
@@ -18,7 +18,7 @@ public class ProductRepositoryImpl implements ProductRepository {
     }
 
     @Override
-    public Optional<? extends ProductModel> getById(int id) {
+    public Optional<ProductModel> getById(int id) {
         return items.stream()
                 .filter(o -> o.getId() == id)
                 .findFirst()
@@ -27,28 +27,22 @@ public class ProductRepositoryImpl implements ProductRepository {
 
     @Override
     public ProductModel create(ProductModel item) {
-        ProductModel copy = item.withId(nextId++);
-        items = Stream.concat(items.stream(), Stream.of(copy))
-                .collect(Collectors.toList())
-        ;
-        return copy;
+        item.setId(nextId++);
+        items.add(item);
+        return item;
     }
 
     @Override
     public ProductModel update(ProductModel item) {
-        ProductModel copy = ProductModel.from(item);
-
-        items.stream()
-                .filter(o -> o.getId() == copy.getId())
-                .findAny()
-                .orElseThrow(RuntimeException::new)
-        ;
-
-        items = items.stream()
-                .map(o -> o.getId() == copy.getId() ? copy : o)
-                .collect(Collectors.toList())
-        ;
-        return copy;
+        for (ProductModel keep : items) {
+            if (keep.getId() == item.getId()) {
+                keep.setName(item.getName());
+                keep.setPrice(item.getPrice());
+                keep.setDescription(item.getDescription());
+                return item;
+            }
+        }
+        throw new RuntimeException();
     }
 
     @Override
