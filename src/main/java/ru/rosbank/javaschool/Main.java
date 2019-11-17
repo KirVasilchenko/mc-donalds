@@ -11,7 +11,7 @@ import java.util.LinkedList;
 
 public class Main {
     public static void main(String[] args) {
-        final ProductServiceImpl service = new ProductServiceImpl(new ProductRepositoryImpl(), new OrderRepositoryImpl());
+        ProductServiceImpl service = new ProductServiceImpl(new ProductRepositoryImpl(), new OrderRepositoryImpl());
         service.saveProduct(new BurgerDetailsDto(
                 0,
                 "Cheeseburger",

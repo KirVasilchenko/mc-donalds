@@ -1,5 +1,6 @@
 package ru.rosbank.javaschool.service;
 
+import lombok.AllArgsConstructor;
 import lombok.RequiredArgsConstructor;
 import ru.rosbank.javaschool.dto.ProductDetailsDto;
 import ru.rosbank.javaschool.dto.ProductDto;
@@ -15,12 +16,12 @@ import java.util.Collection;
 import java.util.stream.Collectors;
 
 @RequiredArgsConstructor
+@AllArgsConstructor
 public class ProductServiceImpl implements ProductService {
-    private final ProductRepository products;
-    private final OrderRepository orders;
+    private ProductRepository products;
+    private OrderRepository orders;
 
     @Override
-    //TODO: cover!
     public Collection<ProductDto> getAllProducts() {
         return products.getAll().stream()
                 .map(ProductDto::from)
@@ -37,7 +38,6 @@ public class ProductServiceImpl implements ProductService {
     }
 
     @Override
-    //TODO: cover!
     public ProductModel saveProduct(ProductDetailsDto dto) {
         if (dto.getId() < 0) {
             throw new InvalidDataException("Id can't be negative");

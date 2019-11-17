@@ -1,7 +1,7 @@
 package ru.rosbank.javaschool.repository;
 
 import ru.rosbank.javaschool.exception.DataSaveException;
-import ru.rosbank.javaschool.model.ProductModel;
+import ru.rosbank.javaschool.model.*;
 
 import java.util.Collection;
 import java.util.Collections;
@@ -44,6 +44,19 @@ public class ProductRepositoryImpl implements ProductRepository {
                 keep.setName(item.getName());
                 keep.setPrice(item.getPrice());
                 keep.setDescription(item.getDescription());
+                if (item instanceof BurgerModel) {
+                    ((BurgerModel) keep).setCutletMeat(((BurgerModel) item).getCutletMeat());
+                    ((BurgerModel) keep).setCutletCount(((BurgerModel) item).getCutletCount());
+                }
+                if (item instanceof PotatoModel) {
+                    ((PotatoModel) keep).setWeightInG(((PotatoModel) item).getWeightInG());
+                }
+                if (item instanceof DrinkModel) {
+                    ((DrinkModel) keep).setVolumeInMl(((DrinkModel) item).getVolumeInMl());
+                }
+                if (item instanceof DessertModel) {
+                    ((DessertModel) keep).setSyrup(((DessertModel) item).getSyrup());
+                }
                 return item;
             }
         }

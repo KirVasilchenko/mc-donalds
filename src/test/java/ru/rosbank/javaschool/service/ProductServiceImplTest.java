@@ -4,6 +4,7 @@ import lombok.val;
 import org.junit.jupiter.api.Test;
 import ru.rosbank.javaschool.dto.BurgerDetailsDto;
 import ru.rosbank.javaschool.exception.DataNotFoundException;
+import ru.rosbank.javaschool.exception.InvalidDataException;
 import ru.rosbank.javaschool.model.BurgerModel;
 import ru.rosbank.javaschool.model.Order;
 import ru.rosbank.javaschool.model.OrderPosition;
@@ -11,7 +12,6 @@ import ru.rosbank.javaschool.repository.OrderRepositoryImpl;
 import ru.rosbank.javaschool.repository.ProductRepositoryImpl;
 
 import java.util.LinkedList;
-import java.util.List;
 import java.util.Optional;
 
 import static org.junit.jupiter.api.Assertions.*;
@@ -158,5 +158,84 @@ class ProductServiceImplTest {
 
         boolean result = service.removeProductById(1);
         assertEquals(true, result);
+    }
+
+    @Test
+    void getAllProductsCanGetSavedProducts() {
+        final ProductServiceImpl service = new ProductServiceImpl(new ProductRepositoryImpl(), new OrderRepositoryImpl());
+        service.saveProduct(new BurgerDetailsDto(
+                0,
+                "Cheeseburger",
+                52,
+                "Juicy meat",
+                "Beef",
+                1
+        ));
+        assertNotNull(service.getAllProducts());
+    }
+
+    @Test
+    void saveProductFailsWithNegativeId() {
+        final ProductServiceImpl service = new ProductServiceImpl(new ProductRepositoryImpl(), new OrderRepositoryImpl());
+
+        assertThrows(InvalidDataException.class, () -> service.saveProduct(new BurgerDetailsDto(
+                -1,
+                "Cheeseburger",
+                52,
+                "Juicy meat",
+                "Beef",
+                1
+        )));
+    }
+
+    @Test
+    void saveProductFailsWithEmptyName() {
+        final ProductServiceImpl service = new ProductServiceImpl(new ProductRepositoryImpl(), new OrderRepositoryImpl());
+
+        assertThrows(InvalidDataException.class, () -> service.saveProduct(new BurgerDetailsDto(
+                0,
+                null,
+                52,
+                "Juicy meat",
+                "Beef",
+                1
+        )));
+    }
+
+    @Test
+    void saveProductFailsWithNegativePrice() {
+        final ProductServiceImpl service = new ProductServiceImpl(new ProductRepositoryImpl(), new OrderRepositoryImpl());
+
+        assertThrows(InvalidDataException.class, () -> service.saveProduct(new BurgerDetailsDto(
+                0,
+                "Cheeseburger",
+                -52,
+                "Juicy meat",
+                "Beef",
+                1
+        )));
+    }
+
+    @Test
+    void saveProductUpdatesExistingProduct() {
+        final ProductServiceImpl service = new ProductServiceImpl(new ProductRepositoryImpl(), new OrderRepositoryImpl());
+        service.saveProduct(new BurgerDetailsDto(
+                0,
+                "Cheeseburger",
+                52,
+                "Juicy meat",
+                "Beef",
+                1
+        ));
+        service.saveProduct(new BurgerDetailsDto(
+                1,
+                "Hamburger",
+                50,
+                "Juicy meat",
+                "Beef",
+                1
+        ));
+
+        assertEquals(service.getProductById(1).getName(), "Hamburger");
     }
 }
