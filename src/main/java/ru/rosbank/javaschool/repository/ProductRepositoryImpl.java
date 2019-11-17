@@ -19,7 +19,6 @@ public class ProductRepositoryImpl implements ProductRepository {
     }
 
     @Override
-    //TODO: cover!
     public Optional<ProductModel> getById(int id) {
         return items.stream()
                 .filter(o -> o.getId() == id)

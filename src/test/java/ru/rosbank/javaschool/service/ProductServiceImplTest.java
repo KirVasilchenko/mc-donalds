@@ -351,4 +351,76 @@ class ProductServiceImplTest {
                 1
         )));
     }
+
+    @Test
+    void getAllOrdersCanGetSavedOrders() {
+        final ProductServiceImpl service = new ProductServiceImpl(new ProductRepositoryImpl(), new OrderRepositoryImpl());
+        service.saveProduct(new BurgerDetailsDto(
+                0,
+                "Cheeseburger",
+                52,
+                "Juicy meat",
+                "Beef",
+                1
+        ));
+
+        Order order = new Order(0, new LinkedList<OrderPosition>());
+        OrderPosition position = new OrderPosition(service.getProductById(1), 1);
+        order.add(position);
+        service.saveOrder(order);
+
+        assertNotNull(service.getAllOrders());
+    }
+
+    @Test
+    void saveOrderUpdatesExistingOrder() {
+        final ProductServiceImpl service = new ProductServiceImpl(new ProductRepositoryImpl(), new OrderRepositoryImpl());
+        service.saveProduct(new BurgerDetailsDto(
+                0,
+                "Cheeseburger",
+                52,
+                "Juicy meat",
+                "Beef",
+                1
+        ));
+        service.saveProduct(new BurgerDetailsDto(
+                0,
+                "Hamburger",
+                50,
+                "Juicy meat",
+                "Beef",
+                1
+        ));
+
+        Order order = new Order(0, new LinkedList<OrderPosition>());
+        OrderPosition position = new OrderPosition(service.getProductById(1), 1);
+        order.add(position);
+        service.saveOrder(order);
+
+        order = new Order(1, new LinkedList<OrderPosition>());
+        position = new OrderPosition(service.getProductById(2), 1);
+        order.add(position);
+        service.saveOrder(order);
+
+        assertNotNull(service.getOrderById(1));
+    }
+
+    @Test
+    void saveOrderFailsWithNegativeId() {
+        final ProductServiceImpl service = new ProductServiceImpl(new ProductRepositoryImpl(), new OrderRepositoryImpl());
+        service.saveProduct(new BurgerDetailsDto(
+                0,
+                "Cheeseburger",
+                52,
+                "Juicy meat",
+                "Beef",
+                1
+        ));
+
+        Order order = new Order(-1, new LinkedList<OrderPosition>());
+        OrderPosition position = new OrderPosition(service.getProductById(1), 1);
+        order.add(position);
+
+        assertThrows(InvalidDataException.class, () -> service.saveOrder(order));
+    }
 }
