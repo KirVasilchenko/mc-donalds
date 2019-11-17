@@ -30,7 +30,6 @@ public class OrderRepositoryImpl implements OrderRepository {
     }
 
     @Override
-    //TODO: cover!
     public Order create(Order item) {
         item.setId(nextId++);
         items.add(item);

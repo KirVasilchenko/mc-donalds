@@ -14,7 +14,6 @@ public class ProductRepositoryImpl implements ProductRepository {
     private int nextId = 1;
 
     @Override
-    //TODO: cover!
     public Collection<ProductModel> getAll() {
         return Collections.unmodifiableCollection(items);
     }
@@ -29,7 +28,6 @@ public class ProductRepositoryImpl implements ProductRepository {
     }
 
     @Override
-    //TODO: cover!
     public ProductModel create(ProductModel item) {
         item.setId(nextId++);
         items.add(item);

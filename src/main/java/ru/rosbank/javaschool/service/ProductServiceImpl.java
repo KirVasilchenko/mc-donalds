@@ -1,7 +1,6 @@
 package ru.rosbank.javaschool.service;
 
 import lombok.AllArgsConstructor;
-import lombok.RequiredArgsConstructor;
 import ru.rosbank.javaschool.dto.ProductDetailsDto;
 import ru.rosbank.javaschool.dto.ProductDto;
 import ru.rosbank.javaschool.exception.DataNotFoundException;
@@ -15,7 +14,6 @@ import java.util.ArrayList;
 import java.util.Collection;
 import java.util.stream.Collectors;
 
-@RequiredArgsConstructor
 @AllArgsConstructor
 public class ProductServiceImpl implements ProductService {
     private ProductRepository products;

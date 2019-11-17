@@ -3,6 +3,9 @@ package ru.rosbank.javaschool.service;
 import lombok.val;
 import org.junit.jupiter.api.Test;
 import ru.rosbank.javaschool.dto.BurgerDetailsDto;
+import ru.rosbank.javaschool.dto.DessertDetailsDto;
+import ru.rosbank.javaschool.dto.DrinkDetailsDto;
+import ru.rosbank.javaschool.dto.PotatoDetailsDto;
 import ru.rosbank.javaschool.exception.DataNotFoundException;
 import ru.rosbank.javaschool.exception.InvalidDataException;
 import ru.rosbank.javaschool.model.BurgerModel;
@@ -217,7 +220,7 @@ class ProductServiceImplTest {
     }
 
     @Test
-    void saveProductUpdatesExistingProduct() {
+    void saveProductUpdatesExistingProductAsBurger() {
         final ProductServiceImpl service = new ProductServiceImpl(new ProductRepositoryImpl(), new OrderRepositoryImpl());
         service.saveProduct(new BurgerDetailsDto(
                 0,
@@ -237,5 +240,70 @@ class ProductServiceImplTest {
         ));
 
         assertEquals(service.getProductById(1).getName(), "Hamburger");
+    }
+
+    @Test
+    void saveProductUpdatesExistingProductAsPotato() {
+        final ProductServiceImpl service = new ProductServiceImpl(new ProductRepositoryImpl(), new OrderRepositoryImpl());
+        service.saveProduct(new PotatoDetailsDto(
+                0,
+                "FryS",
+                49,
+                "Small french fries",
+                50
+        ));
+        service.saveProduct(new PotatoDetailsDto(
+                1,
+                "FryM",
+                56,
+                "Medium french fries",
+                75
+        ));
+
+        assertEquals(service.getProductById(1).getName(), "FryM");
+    }
+
+    @Test
+    void saveProductUpdatesExistingProductAsDrink() {
+        final ProductServiceImpl service = new ProductServiceImpl(new ProductRepositoryImpl(), new OrderRepositoryImpl());
+        service.saveProduct(new DrinkDetailsDto(
+                0,
+                "FantaS",
+                49,
+                "Small drink of Fanta",
+                250
+        ));
+        service.saveProduct(new DrinkDetailsDto(
+                1,
+                "SpriteS",
+                49,
+                "Small drink of Sprite",
+                250
+        ));
+
+
+        assertEquals(service.getProductById(1).getName(), "SpriteS");
+    }
+
+    @Test
+    void saveProductUpdatesExistingProductAsDessert() {
+        final ProductServiceImpl service = new ProductServiceImpl(new ProductRepositoryImpl(), new OrderRepositoryImpl());
+        service.saveProduct(new DessertDetailsDto(
+                0,
+                "Cheesecake",
+                149,
+                "Tasty cheesecake with strawberry syrup",
+                "Strawberry"
+        ));
+        service.saveProduct(new DessertDetailsDto(
+                1,
+                "Cheesecake",
+                149,
+                "Tasty cheesecake with caramel syrup",
+                "Caramel"
+        ));
+
+
+        assertEquals(((DessertDetailsDto) service.getProductById(1)).getSyrup(), "Caramel");
     }
 }
