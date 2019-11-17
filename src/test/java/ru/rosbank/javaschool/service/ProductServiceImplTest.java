@@ -1,118 +1,79 @@
 package ru.rosbank.javaschool.service;
 
+import lombok.val;
 import org.junit.jupiter.api.Test;
-import ru.rosbank.javaschool.dto.BurgerDetailsDto;
+import ru.rosbank.javaschool.exception.DataNotFoundException;
+import ru.rosbank.javaschool.model.BurgerModel;
+import ru.rosbank.javaschool.model.Order;
 import ru.rosbank.javaschool.repository.OrderRepositoryImpl;
 import ru.rosbank.javaschool.repository.ProductRepositoryImpl;
 
+import java.util.Optional;
+
 import static org.junit.jupiter.api.Assertions.*;
+import static org.mockito.Mockito.*;
 
 class ProductServiceImplTest {
 
     @Test
-    void getAllProducts() {
-        final ProductServiceImpl service = new ProductServiceImpl(new ProductRepositoryImpl(), new OrderRepositoryImpl());
-        service.saveProduct(new BurgerDetailsDto(
-                0,
-                "Cheeseburger",
-                52,
-                "Juicy meat",
-                "Beef",
-                1
-        ));
+    void getProductByIdShouldThrowExceptionWhenNoItemsInRepo() {
+        val pRepository = mock(ProductRepositoryImpl.class);
+        val oRepository = mock(OrderRepositoryImpl.class);
+        doReturn(Optional.empty()).when(pRepository).getById(1);
+        val service = new ProductServiceImpl(pRepository, oRepository);
 
-        String result = service.getAllProducts().toString();
-
-        assertEquals("[ProductDto(id=1, name=Cheeseburger, price=52)]", result);
+        assertThrows(DataNotFoundException.class, () -> service.getProductById(1));
     }
 
     @Test
-    void getProductById() {
-        final ProductServiceImpl service = new ProductServiceImpl(new ProductRepositoryImpl(), new OrderRepositoryImpl());
-        service.saveProduct(new BurgerDetailsDto(
-                0,
-                "Cheeseburger",
-                52,
-                "Juicy meat",
-                "Beef",
-                1
-        ));
+    void getProductByIdShouldThrowExceptionWhenNoSuchItemInRepo() {
+        val pRepository = mock(ProductRepositoryImpl.class);
+        val oRepository = mock(OrderRepositoryImpl.class);
+        doReturn(Optional.of(new BurgerModel())).when(pRepository).getById(1);
+        doReturn(Optional.empty()).when(pRepository).getById(anyInt());
+        val service = new ProductServiceImpl(pRepository, oRepository);
 
-        String result = service.getProductById(1).toString();
-
-        assertEquals("BurgerDetailsDto(cutletMeat=Beef, cutletCount=1)", result);
-    }
-
-//    @Test
-//    void saveProduct() {
-//    }
-
-    @Test
-    void removeProductById() {
-        final ProductServiceImpl service = new ProductServiceImpl(new ProductRepositoryImpl(), new OrderRepositoryImpl());
-        service.saveProduct(new BurgerDetailsDto(
-                0,
-                "Cheeseburger",
-                52,
-                "Juicy meat",
-                "Beef",
-                1
-        ));
-
-        boolean result = service.removeProductById(1);
-
-        assertEquals(true, result);
+        assertThrows(DataNotFoundException.class, () -> service.getProductById(2));
     }
 
     @Test
-    void getProductBySearch() {
-        final ProductServiceImpl service = new ProductServiceImpl(new ProductRepositoryImpl(), new OrderRepositoryImpl());
-        service.saveProduct(new BurgerDetailsDto(
-                0,
-                "Cheeseburger",
-                52,
-                "Juicy meat",
-                "Beef",
-                1
-        ));
+    void getProductByIdShouldReturnDtoWhenItemPresentInRepo() {
+        val pRepository = mock(ProductRepositoryImpl.class);
+        val oRepository = mock(OrderRepositoryImpl.class);
+        doReturn(Optional.of(new BurgerModel())).when(pRepository).getById(1);
+        val service = new ProductServiceImpl(pRepository, oRepository);
 
-        String result = service.getProductBySearch("Cheeseburger").toString();
-
-        assertEquals("[ProductDto(id=1, name=Cheeseburger, price=52)]", result);
+        assertNotNull(service.getProductById(1));
     }
 
     @Test
-    void getCategoryListingSuccess() {
-        final ProductServiceImpl service = new ProductServiceImpl(new ProductRepositoryImpl(), new OrderRepositoryImpl());
-        service.saveProduct(new BurgerDetailsDto(
-                0,
-                "Cheeseburger",
-                52,
-                "Juicy meat",
-                "Beef",
-                1
-        ));
+    void getOrderByIdShouldThrowExceptionWhenNoItemsInRepo() {
+        val pRepository = mock(ProductRepositoryImpl.class);
+        val oRepository = mock(OrderRepositoryImpl.class);
+        doReturn(Optional.empty()).when(oRepository).getById(1);
+        val service = new ProductServiceImpl(pRepository, oRepository);
 
-        String result = service.getCategoryListing("Burger").toString();
-
-        assertEquals("[ProductDto(id=1, name=Cheeseburger, price=52)]", result);
+        assertThrows(DataNotFoundException.class, () -> service.getOrderById(1));
     }
 
     @Test
-    void getCategoryListingNothing() {
-        final ProductServiceImpl service = new ProductServiceImpl(new ProductRepositoryImpl(), new OrderRepositoryImpl());
-        service.saveProduct(new BurgerDetailsDto(
-                0,
-                "Cheeseburger",
-                52,
-                "Juicy meat",
-                "Beef",
-                1
-        ));
+    void getOrderByIdShouldThrowExceptionWhenNoSuchItemInRepo() {
+        val pRepository = mock(ProductRepositoryImpl.class);
+        val oRepository = mock(OrderRepositoryImpl.class);
+        doReturn(Optional.of(new Order())).when(oRepository).getById(1);
+        doReturn(Optional.empty()).when(oRepository).getById(anyInt());
+        val service = new ProductServiceImpl(pRepository, oRepository);
 
-        String result = service.getCategoryListing("Drink").toString();
-
-        assertEquals("[]", result);
+        assertThrows(DataNotFoundException.class, () -> service.getOrderById(2));
     }
 
+    @Test
+    void getOrderByIdShouldReturnDtoWhenItemPresentInRepo() {
+        val pRepository = mock(ProductRepositoryImpl.class);
+        val oRepository = mock(OrderRepositoryImpl.class);
+        doReturn(Optional.of(new Order())).when(oRepository).getById(1);
+        val service = new ProductServiceImpl(pRepository, oRepository);
+
+        assertNotNull(service.getOrderById(1));
+    }
 }
