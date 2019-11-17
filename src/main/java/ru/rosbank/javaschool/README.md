@@ -1,0 +1,1 @@
+[![Build Status](https://travis-ci.org/KirVasilchenko/mc-donalds.svg?branch=master)](https://travis-ci.org/KirVasilchenko/mc-donalds)[![codecov](https://codecov.io/gh/KirVasilchenko/mc-donalds/branch/master/graph/badge.svg)](https://codecov.io/gh/KirVasilchenko/mc-donalds)
