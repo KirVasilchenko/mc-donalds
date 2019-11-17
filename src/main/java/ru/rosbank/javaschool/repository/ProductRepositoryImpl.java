@@ -48,11 +48,11 @@ public class ProductRepositoryImpl implements ProductRepository {
 
     @Override
     public boolean removeById(int id) {
-        Collection<? extends ProductModel> original = items;
+        Collection<ProductModel> original = items;
         Collection<ProductModel> copy = items.stream()
                 .filter(o -> o.getId() != id)
                 .collect(Collectors.toList());
         items = copy;
-        return original.size() == copy.size();
+        return original.size() != copy.size();
     }
 }

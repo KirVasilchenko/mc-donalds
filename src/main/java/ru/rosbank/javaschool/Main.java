@@ -17,7 +17,11 @@ public class Main {
                 1
         ));
 
-        System.out.println(service.getAllProducts());
+        String text = service.getAllProducts().toString();
+        System.out.println(text);
+
+        boolean result = service.removeProductById(1);
+        System.out.println(result);
 
     }
 }
