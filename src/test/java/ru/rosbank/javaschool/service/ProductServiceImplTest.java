@@ -7,6 +7,7 @@ import ru.rosbank.javaschool.dto.DessertDetailsDto;
 import ru.rosbank.javaschool.dto.DrinkDetailsDto;
 import ru.rosbank.javaschool.dto.PotatoDetailsDto;
 import ru.rosbank.javaschool.exception.DataNotFoundException;
+import ru.rosbank.javaschool.exception.DataSaveException;
 import ru.rosbank.javaschool.exception.InvalidDataException;
 import ru.rosbank.javaschool.model.BurgerModel;
 import ru.rosbank.javaschool.model.Order;
@@ -86,21 +87,21 @@ class ProductServiceImplTest {
 
     @Test
     void removeProductByIdShouldThrowExceptionWhenNoItemsInRepo() {
-        val pRepository = mock(ProductRepositoryImpl.class);
-        val oRepository = mock(OrderRepositoryImpl.class);
-        doReturn(Optional.empty()).when(pRepository).getById(1);
-        val service = new ProductServiceImpl(pRepository, oRepository);
-
+        final ProductServiceImpl service = new ProductServiceImpl(new ProductRepositoryImpl(), new OrderRepositoryImpl());
         assertThrows(DataNotFoundException.class, () -> service.removeProductById(1));
     }
 
     @Test
     void removeProductByIdShouldThrowExceptionWhenNoSuchItemInRepo() {
-        val pRepository = mock(ProductRepositoryImpl.class);
-        val oRepository = mock(OrderRepositoryImpl.class);
-        doReturn(Optional.of(new BurgerModel())).when(pRepository).getById(1);
-        doReturn(Optional.empty()).when(pRepository).getById(anyInt());
-        val service = new ProductServiceImpl(pRepository, oRepository);
+        final ProductServiceImpl service = new ProductServiceImpl(new ProductRepositoryImpl(), new OrderRepositoryImpl());
+        service.saveProduct(new BurgerDetailsDto(
+                0,
+                "Cheeseburger",
+                52,
+                "Juicy meat",
+                "Beef",
+                1
+        ));
 
         assertThrows(DataNotFoundException.class, () -> service.removeProductById(2));
     }
@@ -118,7 +119,7 @@ class ProductServiceImplTest {
         ));
 
         boolean result = service.removeProductById(1);
-        assertEquals(true, result);
+        assertTrue(result);
     }
 
     @Test
@@ -160,7 +161,7 @@ class ProductServiceImplTest {
         service.saveOrder(order);
 
         boolean result = service.removeProductById(1);
-        assertEquals(true, result);
+        assertTrue(result);
     }
 
     @Test
@@ -281,7 +282,6 @@ class ProductServiceImplTest {
                 250
         ));
 
-
         assertEquals(service.getProductById(1).getName(), "SpriteS");
     }
 
@@ -303,7 +303,29 @@ class ProductServiceImplTest {
                 "Caramel"
         ));
 
-
         assertEquals(((DessertDetailsDto) service.getProductById(1)).getSyrup(), "Caramel");
+    }
+
+    @Test
+    void saveProductFailsUpdateNonExistingProduct() {
+        final ProductServiceImpl service = new ProductServiceImpl(new ProductRepositoryImpl(), new OrderRepositoryImpl());
+        service.saveProduct(new BurgerDetailsDto(
+                0,
+                "Cheeseburger",
+                52,
+                "Juicy meat",
+                "Beef",
+                1
+        ));
+
+
+        assertThrows(DataSaveException.class, () -> service.saveProduct(new BurgerDetailsDto(
+                2,
+                "Hamburger",
+                50,
+                "Juicy meat",
+                "Beef",
+                1
+        )));
     }
 }
