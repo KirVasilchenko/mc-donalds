@@ -10,7 +10,6 @@ public interface ProductService {
 
     ProductDetailsDto getById(int id);
 
-    //    void save(ProductDetailsDto dto);
     <T extends ProductDetailsDto> void save(T dto);
 
     void removeById(int id);

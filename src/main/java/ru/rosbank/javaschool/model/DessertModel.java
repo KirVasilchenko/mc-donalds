@@ -2,7 +2,6 @@ package ru.rosbank.javaschool.model;
 
 import lombok.AllArgsConstructor;
 import lombok.Data;
-import lombok.EqualsAndHashCode;
 import lombok.NoArgsConstructor;
 import ru.rosbank.javaschool.dto.DessertDetailsDto;
 

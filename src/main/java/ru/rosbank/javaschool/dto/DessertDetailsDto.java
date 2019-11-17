@@ -4,9 +4,6 @@ import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 import ru.rosbank.javaschool.model.DessertModel;
-import ru.rosbank.javaschool.model.DrinkModel;
-import ru.rosbank.javaschool.model.PotatoModel;
-import ru.rosbank.javaschool.model.ProductModel;
 
 @Data
 @AllArgsConstructor
@@ -17,16 +14,6 @@ public class DessertDetailsDto extends ProductDetailsDto {
     public DessertDetailsDto(int id, String name, int price, String description, String syrup) {
         super(id, name, price, description);
         this.syrup = syrup;
-    }
-
-    public static DessertDetailsDto from(DessertModel model) {
-        return new DessertDetailsDto(
-                model.getId(),
-                model.getName(),
-                model.getPrice(),
-                model.getDescription(),
-                model.getSyrup()
-        );
     }
 
     @Override

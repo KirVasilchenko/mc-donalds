@@ -15,14 +15,5 @@ public abstract class ProductDetailsDto {
     private int price;
     private String description;
 
-//    public static ProductDetailsDto from(ProductModel model) {
-//        return new ProductDetailsDto(
-//                model.getId(),
-//                model.getName(),
-//                model.getPrice(),
-//                model.getDescription()
-//        );
-//    }
-
     public abstract ProductModel fromDto();
 }
