@@ -67,6 +67,9 @@
                         <configuration>
                             <includes>
                                 <include>**/*Service.class</include>
+                                <include>**/*ServiceImpl.class</include>
+                                <include>**/*Repository.class</include>
+                                <include>**/*RepositoryImpl.class</include>
                             </includes>
                         </configuration>
                     </execution>
