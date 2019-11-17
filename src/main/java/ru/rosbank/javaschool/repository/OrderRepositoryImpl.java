@@ -56,6 +56,6 @@ public class OrderRepositoryImpl implements OrderRepository {
                 .filter(o -> o.getId() != id)
                 .collect(Collectors.toList());
         items = copy;
-        return original.size() == copy.size();
+        return original.size() != copy.size();
     }
 }

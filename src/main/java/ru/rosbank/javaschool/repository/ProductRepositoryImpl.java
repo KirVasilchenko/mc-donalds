@@ -35,7 +35,6 @@ public class ProductRepositoryImpl implements ProductRepository {
     }
 
     @Override
-    //TODO: cover!
     public ProductModel update(ProductModel item) {
         for (ProductModel keep : items) {
             if (keep.getId() == item.getId()) {
@@ -62,7 +61,6 @@ public class ProductRepositoryImpl implements ProductRepository {
     }
 
     @Override
-    //TODO: cover!
     public boolean removeById(int id) {
         Collection<ProductModel> original = items;
         Collection<ProductModel> copy = items.stream()
