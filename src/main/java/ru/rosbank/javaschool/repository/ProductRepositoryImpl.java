@@ -14,11 +14,13 @@ public class ProductRepositoryImpl implements ProductRepository {
     private int nextId = 1;
 
     @Override
+    //TODO: cover!
     public Collection<ProductModel> getAll() {
         return Collections.unmodifiableCollection(items);
     }
 
     @Override
+    //TODO: cover!
     public Optional<ProductModel> getById(int id) {
         return items.stream()
                 .filter(o -> o.getId() == id)
@@ -27,6 +29,7 @@ public class ProductRepositoryImpl implements ProductRepository {
     }
 
     @Override
+    //TODO: cover!
     public ProductModel create(ProductModel item) {
         item.setId(nextId++);
         items.add(item);
@@ -34,6 +37,7 @@ public class ProductRepositoryImpl implements ProductRepository {
     }
 
     @Override
+    //TODO: cover!
     public ProductModel update(ProductModel item) {
         for (ProductModel keep : items) {
             if (keep.getId() == item.getId()) {
@@ -47,6 +51,7 @@ public class ProductRepositoryImpl implements ProductRepository {
     }
 
     @Override
+    //TODO: cover!
     public boolean removeById(int id) {
         Collection<ProductModel> original = items;
         Collection<ProductModel> copy = items.stream()

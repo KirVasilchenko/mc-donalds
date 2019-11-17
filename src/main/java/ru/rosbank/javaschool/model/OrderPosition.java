@@ -3,6 +3,7 @@ package ru.rosbank.javaschool.model;
 import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
+import ru.rosbank.javaschool.dto.ProductDetailsDto;
 
 @Data
 @AllArgsConstructor
@@ -13,7 +14,7 @@ public class OrderPosition {
     private int price;
     private int count;
 
-    public OrderPosition(ProductModel item, int count) {
+    public OrderPosition(ProductDetailsDto item, int count) {
         this.id = item.getId();
         this.name = item.getName();
         this.price = item.getPrice();

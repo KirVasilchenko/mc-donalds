@@ -20,6 +20,7 @@ public class ProductServiceImpl implements ProductService {
     private final OrderRepository orders;
 
     @Override
+    //TODO: cover!
     public Collection<ProductDto> getAllProducts() {
         return products.getAll().stream()
                 .map(ProductDto::from)
@@ -36,6 +37,7 @@ public class ProductServiceImpl implements ProductService {
     }
 
     @Override
+    //TODO: cover!
     public ProductModel saveProduct(ProductDetailsDto dto) {
         if (dto.getId() < 0) {
             throw new InvalidDataException("Id can't be negative");
@@ -66,6 +68,7 @@ public class ProductServiceImpl implements ProductService {
     }
 
     @Override
+    //TODO: cover!
     public Collection<Order> getAllOrders() {
         return new ArrayList<>(orders.getAll())
                 ;
@@ -79,6 +82,7 @@ public class ProductServiceImpl implements ProductService {
     }
 
     @Override
+    //TODO: cover!
     public Order saveOrder(Order item) {
         if (item.getId() < 0) {
             throw new InvalidDataException("Id can't be negative");
@@ -101,6 +105,7 @@ public class ProductServiceImpl implements ProductService {
     }
 
     @Override
+    //TODO: cover!
     public Collection<ProductDto> getProductBySearch(String query) {
         return products.getAll().stream()
                 .filter(o -> o.getName().toLowerCase().contains(query.toLowerCase()))
@@ -110,6 +115,7 @@ public class ProductServiceImpl implements ProductService {
     }
 
     @Override
+    //TODO: cover!
     public Collection<ProductDto> getCategoryListing(String category) {
         return products.getAll().stream()
                 .filter(o -> o.getClass().getSimpleName().toLowerCase().contains(category.toLowerCase()))

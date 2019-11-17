@@ -1,9 +1,13 @@
 package ru.rosbank.javaschool;
 
 import ru.rosbank.javaschool.dto.BurgerDetailsDto;
+import ru.rosbank.javaschool.model.Order;
+import ru.rosbank.javaschool.model.OrderPosition;
 import ru.rosbank.javaschool.repository.OrderRepositoryImpl;
 import ru.rosbank.javaschool.repository.ProductRepositoryImpl;
 import ru.rosbank.javaschool.service.ProductServiceImpl;
+
+import java.util.LinkedList;
 
 public class Main {
     public static void main(String[] args) {
@@ -17,11 +21,12 @@ public class Main {
                 1
         ));
 
-        String text = service.getAllProducts().toString();
-        System.out.println(text);
+        Order order = new Order(0, new LinkedList<OrderPosition>());
+        OrderPosition position = new OrderPosition(service.getProductById(1), 1);
+        order.add(position);
+        service.saveOrder(order);
 
-        boolean result = service.removeProductById(1);
-        System.out.println(result);
+        System.out.println(service.getOrderById(1).toString());
 
     }
 }
