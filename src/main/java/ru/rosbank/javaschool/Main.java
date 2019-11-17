@@ -1,13 +1,14 @@
 package ru.rosbank.javaschool;
 
 import ru.rosbank.javaschool.dto.BurgerDetailsDto;
+import ru.rosbank.javaschool.repository.OrderRepositoryImpl;
 import ru.rosbank.javaschool.repository.ProductRepositoryImpl;
 import ru.rosbank.javaschool.service.ProductServiceImpl;
 
 public class Main {
     public static void main(String[] args) {
-        final ProductServiceImpl service = new ProductServiceImpl(new ProductRepositoryImpl());
-        service.save(new BurgerDetailsDto(
+        final ProductServiceImpl service = new ProductServiceImpl(new ProductRepositoryImpl(), new OrderRepositoryImpl());
+        service.saveProduct(new BurgerDetailsDto(
                 0,
                 "Cheeseburger",
                 52,
@@ -16,7 +17,7 @@ public class Main {
                 1
         ));
 
-        System.out.println(service.getAll());
+        System.out.println(service.getAllProducts());
 
     }
 }

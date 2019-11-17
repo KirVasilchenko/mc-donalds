@@ -5,34 +5,38 @@ import ru.rosbank.javaschool.dto.ProductDetailsDto;
 import ru.rosbank.javaschool.dto.ProductDto;
 import ru.rosbank.javaschool.exception.DataNotFoundException;
 import ru.rosbank.javaschool.exception.InvalidDataException;
+import ru.rosbank.javaschool.model.Order;
 import ru.rosbank.javaschool.model.ProductModel;
+import ru.rosbank.javaschool.repository.OrderRepository;
 import ru.rosbank.javaschool.repository.ProductRepository;
 
+import java.util.ArrayList;
 import java.util.Collection;
 import java.util.stream.Collectors;
 
 @RequiredArgsConstructor
 public class ProductServiceImpl implements ProductService {
-    private final ProductRepository repository;
+    private final ProductRepository products;
+    private final OrderRepository orders;
 
     @Override
-    public Collection<ProductDto> getAll() {
-        return repository.getAll().stream()
+    public Collection<ProductDto> getAllProducts() {
+        return products.getAll().stream()
                 .map(ProductDto::from)
                 .collect(Collectors.toList())
                 ;
     }
 
     @Override
-    public ProductDetailsDto getById(int id) {
-        return repository.getById(id)
+    public ProductDetailsDto getProductById(int id) {
+        return products.getById(id)
                 .map(ProductModel::toDto)
                 .orElseThrow(DataNotFoundException::new)
                 ;
     }
 
     @Override
-    public ProductModel save(ProductDetailsDto dto) {
+    public ProductModel saveProduct(ProductDetailsDto dto) {
         if (dto.getId() < 0) {
             throw new InvalidDataException("Id can't be negative");
         }
@@ -46,15 +50,50 @@ public class ProductServiceImpl implements ProductService {
         }
 
         if (dto.getId() == 0) {
-            return repository.create(dto.fromDto());
+            return products.create(dto.fromDto());
         }
 
-        return repository.update(dto.fromDto());
+        return products.update(dto.fromDto());
     }
 
     @Override
-    public boolean removeById(int id) {
-        boolean removed = repository.removeById(id);
+    public boolean removeProductById(int id) {
+        boolean removed = products.removeById(id);
+        if (!removed) {
+            throw new DataNotFoundException();
+        }
+        return true;
+    }
+
+    @Override
+    public Collection<Order> getAllOrders() {
+        return new ArrayList<>(orders.getAll())
+                ;
+    }
+
+    @Override
+    public Order getOrderById(int id) {
+        return orders.getById(id)
+                .orElseThrow(DataNotFoundException::new)
+                ;
+    }
+
+    @Override
+    public Order saveOrder(Order item) {
+        if (item.getId() < 0) {
+            throw new InvalidDataException("Id can't be negative");
+        }
+
+        if (item.getId() == 0) {
+            return orders.create(item);
+        }
+
+        return orders.update(item);
+    }
+
+    @Override
+    public boolean removeOrderById(int id) {
+        boolean removed = orders.removeById(id);
         if (!removed) {
             throw new DataNotFoundException();
         }

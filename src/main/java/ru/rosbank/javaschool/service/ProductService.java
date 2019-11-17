@@ -2,17 +2,25 @@ package ru.rosbank.javaschool.service;
 
 import ru.rosbank.javaschool.dto.ProductDetailsDto;
 import ru.rosbank.javaschool.dto.ProductDto;
+import ru.rosbank.javaschool.model.Order;
 import ru.rosbank.javaschool.model.ProductModel;
 
 import java.util.Collection;
-import java.util.List;
 
 public interface ProductService {
-    Collection<ProductDto> getAll();
+    Collection<ProductDto> getAllProducts();
 
-    ProductDetailsDto getById(int id);
+    Collection<Order> getAllOrders();
 
-    ProductModel save(ProductDetailsDto dto);
+    ProductDetailsDto getProductById(int id);
 
-    boolean removeById(int id);
+    Order getOrderById(int id);
+
+    ProductModel saveProduct(ProductDetailsDto dto);
+
+    Order saveOrder(Order item);
+
+    boolean removeProductById(int id);
+
+    boolean removeOrderById(int id);
 }
